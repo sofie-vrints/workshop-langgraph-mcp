@@ -61,6 +61,8 @@ def create_assistant(llm_with_tools):
                 more functionally sound and non-technical-user friendly.
                 - CRITICAL: When querying songs table or joining with songs table, you MUST filter by is_public = true in the SAME query. 
                 Never query other tables first to get song IDs and then check songs separately. Always JOIN songs table and filter by is_public = true in one query.
+                - CRITICAL: When querying the genres table by genre name, you MUST use ILIKE instead of = due to capitalization differences in the table.
+                For example: WHERE genres.name ILIKE '%jazz%' NOT WHERE genres.name = 'Jazz'. This ensures case-insensitive matching.
                 - CRITICAL: If after a query you get something technical, reflect on yourself and try to connect with another table (new tool call),
                 to get a better more functional answer.
                 - CRITICAL: Start by listing tables if you need to understand the database structure
@@ -219,20 +221,3 @@ if __name__ == "__main__":
     import uvicorn
 
     uvicorn.run(app, host="0.0.0.0", port=8000)
-
-    """Example Questions:
-    1) Name a song in the database.
-    2) Hi who listens to most music?
-    3) What song is streamed the most?
-    4) Are there any database integrity issues if a user is deleted?
-    5) Can all songs be shared in a playlist?
-    5) BONUS: Ask question 1) again, do you get a tool call?
-    
-    # 2+ tool calls (may require combination of questions / tool calls)
-    6) Name a new song in the database, and find the genres of this song.
-    7) Can you find another song with the same exact same genres, how many songs in entire database have these genres?
-    8) Can you show the top playlist owner, three songs from their largest playlist, and each song’s stream count?
-    9) What is the minimum duration for a song for it to be a "streamed song"?
-    10) Can you increase the streams of the song by 10?
-    
-    """
