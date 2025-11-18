@@ -77,11 +77,12 @@ def build_graph(tools):
     memory = MemorySaver()
     react_graph_memory = builder.compile(checkpointer=memory)
 
-    # Visualise the graph
-    png_bytes = react_graph_memory.get_graph().draw_mermaid_png()
-    with open("src/langgraph_mcp/graph_visualisation/model_graph.png", "wb") as f:
-        f.write(png_bytes)
-        return react_graph_memory
+    # Visualise the graph -> this doesn't work at Sopra Steria Wifi.
+    # png_bytes = react_graph_memory.get_graph().draw_mermaid_png()
+    # with open("src/langgraph_mcp/graph_visualisation/model_graph.png", "wb") as f:
+    #     f.write(png_bytes)
+    
+    return react_graph_memory
 
 
 if __name__ == "__main__":
@@ -109,5 +110,12 @@ if __name__ == "__main__":
     # Run the graph with the input state and the config from the langraph
     result = react_graph_memory.invoke(input_state, config)
 
-    for m in result["messages"]:
+    # for m in result["messages"]:
+    #     m.pretty_print()
+
+    new_input = MessageState(
+        messages=[HumanMessage(content="What is the first question that was asked?")]
+    )
+    new_result = react_graph_memory.invoke(new_input, config)
+    for m in new_result["messages"]:
         m.pretty_print()
