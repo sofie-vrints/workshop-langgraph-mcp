@@ -1,5 +1,7 @@
 # MCP (Model Context Protocol) with LangGraph
 
+TLDR: This branch is made to have a copy of the old workshop in nieuwegein with depcrecated 4 exercises (3th/4th are needed to host mcp-vibify-frontend on railway)
+
 This project demonstrates how to use **Model Context Protocol (MCP)** with **LangGraph** to create AI agents that can access external tools and services. We use `MultiServerMCPClient` from `langchain-mcp-adapters` to connect to multiple MCP servers simultaneously.
 
 ## Quick Start
