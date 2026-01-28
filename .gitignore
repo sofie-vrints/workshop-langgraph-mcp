@@ -181,6 +181,9 @@ cython_debug/
 .cursorindexingignore
 *.docx
 
+# VS Code
+.vscode/settings.json
+
 
 # Streamable HTTP MCP Server
 # Only track server-code-explorer.py and fastmcp-flow.txt, ignore everything else

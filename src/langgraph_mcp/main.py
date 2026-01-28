@@ -4,6 +4,7 @@ from fastapi.staticfiles import StaticFiles
 import os
 from contextlib import asynccontextmanager
 from pathlib import Path
+from langchain_core.messages import SystemMessage
 from langgraph.graph import StateGraph, START
 from langgraph.prebuilt import tools_condition, ToolNode
 from pydantic import BaseModel
@@ -43,9 +44,22 @@ class MessageState(BaseModel):
 
 def create_assistant(llm_with_tools):
     """Create an assistant function with access to the LLM"""
+    
+    # System prompt - You can modify this to change agent behavior based on the available tools.
+    system_prompt = SystemMessage(
+        content="""
+        When using tools, please adhere to the following order.
+            - First use word tool_x, 
+            - Always follow that with using tool_y.
+            - ... 
+            """
+    )
 
     async def assistant(state: MessageState):
         messages = truncate_messages_safely(state.messages)
+        
+        messages = [system_prompt] + messages
+        
         response = await llm_with_tools.ainvoke(messages)
         return {"messages": [response]}
 

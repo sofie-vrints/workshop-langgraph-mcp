@@ -4,6 +4,46 @@ This project demonstrates how to use **Model Context Protocol (MCP)** with **Lan
 
 ## Quick Start
 
+### Using Docker
+
+0. Clone this repository:
+    ```bash
+    git clone https://github.com/DiegoLigtenberg/workshop-langgraph-mcp.git
+    cd workshop-langgraph-mcp
+    ```
+
+1. Build the Docker image:
+    ```bash
+    docker build -f src/langgraph_mcp/Dockerfile -t langgraph-mcp .
+    ```
+
+2. Run the container:
+    ```bash
+    docker run -p 8000:8000 langgraph-mcp
+    ```
+
+3. Open your browser and navigate to `http://localhost:8000`
+
+### Using Podman
+
+0. Clone this repository:
+    ```bash
+    git clone https://github.com/DiegoLigtenberg/workshop-langgraph-mcp.git
+    cd workshop-langgraph-mcp
+    ```
+
+1. Build the Podman image:
+    ```bash
+    podman build -f src/langgraph_mcp/Containerfile -t langgraph-mcp .
+    ```
+
+2. Run the container:
+    ```bash
+    podman run -p 8000:8000 langgraph-mcp
+    ```
+
+3. Open your browser and navigate to `http://localhost:8000`
+
 ### Setup this project with Poetry
 
 0. Clone this repository:
@@ -86,12 +126,9 @@ poetry add package-name
 
 ## Project Examples
 
-This repository contains several examples demonstrating MCP integration:
+This repository contains the main application demonstrating MCP integration:
 
-- **`01_langgraph_agent_no_mcp.py`** - Basic LangGraph agent with local tools (no MCP)
-- **`02_mcp_stdio_local.py`** - LangGraph agent with local MCP servers via stdio transport
-- **`03_mcp_stdio_external_package.py`** - LangGraph agent with external MCP packages via stdio (includes FastAPI web interface)
-- **`04_mcp_http_external_package.py`** - LangGraph agent with remote HTTP MCP servers + local servers (includes FastAPI web interface with Supabase integration)
+- **`main.py`** - LangGraph agent with external MCP packages via stdio (includes FastAPI web interface). This file was previously named `03_mcp_stdio_external_package.py`.
 
 ## Resources
 - [MCP Servers Directory](https://mcpservers.org/) - Find more MCP servers
